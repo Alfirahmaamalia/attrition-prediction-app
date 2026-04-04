@@ -1,0 +1,59 @@
+{% extends "base.html" %}
+{% block title %}Page Not Found{% endblock %}
+{% block content %}
+<div class="error-container">
+    <div class="error-box">
+        <h1>404</h1>
+        <h2>Halaman Tidak Ditemukan</h2>
+        <p>Maaf, halaman yang Anda cari tidak ada di aplikasi ini.</p>
+        <a href="{{ url_for('home') }}" class="btn-error">Kembali ke Beranda</a>
+    </div>
+</div>
+
+<style>
+.error-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 400px;
+}
+
+.error-box {
+    text-align: center;
+    padding: 40px;
+    background-color: white;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+
+.error-box h1 {
+    font-size: 72px;
+    color: #dc3545;
+    margin: 0;
+}
+
+.error-box h2 {
+    color: #333;
+    margin: 10px 0;
+}
+
+.error-box p {
+    color: #666;
+    margin-bottom: 20px;
+}
+
+.btn-error {
+    display: inline-block;
+    padding: 10px 20px;
+    background-color: #4CAF50;
+    color: white;
+    text-decoration: none;
+    border-radius: 4px;
+    transition: background-color 0.3s;
+}
+
+.btn-error:hover {
+    background-color: #45a049;
+}
+</style>
+{% endblock %}
