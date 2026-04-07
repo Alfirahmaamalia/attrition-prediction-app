@@ -1,14 +1,28 @@
 {% extends "base.html" %}
-{% block title %}Prediksi Attrition{% endblock %}
+{% block title %}Mesin Prediksi Retensi AI{% endblock %}
 {% block content %}
-<h1>Form Prediksi Attrition Karyawan</h1>
 
-<div class="prediction-container">
-    {% if error_message %}
-    <div class="alert alert-error">
-        <strong>Error:</strong> {{ error_message }}
+<div class="predict-wrapper-card">
+
+    <!-- Premium Predict Header -->
+    <div class="predict-header">
+        <div class="predict-header-content">
+            <div class="icon-brain">
+                <i class="fas fa-brain"></i>
+            </div>
+            <div class="texts">
+                <h1>Mesin Prediksi Retensi</h1>
+                <p>Silakan operasikan parameter karyawan di bawah ini. kami Menggunakan Random Forest untuk menimbang risiko pengunduran diri.</p>
+            </div>
+        </div>
     </div>
-    {% endif %}
+
+    <div class="prediction-container">
+        {% if error_message %}
+        <div class="alert alert-error">
+            <strong>Error:</strong> {{ error_message }}
+        </div>
+        {% endif %}
 
     <form action="{{ url_for('predict_view') }}" method="post" class="prediction-form">
         <div class="form-row">
@@ -19,48 +33,47 @@
             </div>
 
             <div class="form-group">
-                <label for="monthlyIncome">Monthly Income</label>
-                <span class="helper-text">Total monthly income or salary</span>
-                <input type="number" name="monthlyIncome" id="monthlyIncome" required min="0" step="100">
-            </div>
-        </div>
-
-        <div class="form-row">
-            <div class="form-group">
-                <label for="yearsAtCompany">Years At Company</label>
-                <span class="helper-text">Total years worked at this company</span>
-                <input type="number" name="yearsAtCompany" id="yearsAtCompany" required min="0" max="50">
-            </div>
-
-            <div class="form-group">
-                <label for="yearsInCurrentRole">Years In Current Role</label>
-                <span class="helper-text">Total years served in the current position</span>
-                <input type="number" name="yearsInCurrentRole" id="yearsInCurrentRole" required min="0" max="50">
-            </div>
-        </div>
-
-        <div class="form-row">
-            <div class="form-group">
-                <label for="yearsWithCurrManager">Years With Current Manager</label>
-                <span class="helper-text">Total years working under the current direct manager</span>
-                <input type="number" name="yearsWithCurrManager" id="yearsWithCurrManager" required min="0" max="50">
-            </div>
-
-            <div class="form-group">
-                <label for="department">Department</label>
-                <span class="helper-text">Department where the employee belongs</span>
-                <select name="department" id="department" required>
-                    <option value="" disabled selected>Pilih Departemen</option>
-                    <option value="Sales">Sales</option>
-                    <option value="IT">IT</option>
-                    <option value="HR">HR</option>
-                    <option value="Finance">Finance</option>
-                    <option value="Operations">Operations</option>
+                <label for="gender">Gender</label>
+                <span class="helper-text">Employee's gender (Male/Female)</span>
+                <select name="gender" id="gender" required>
+                    <option value="" disabled selected>Pilih Gender</option>
+                    <option value="Male">Male</option>
+                    <option value="Female">Female</option>
                 </select>
             </div>
         </div>
 
         <div class="form-row">
+            <div class="form-group">
+                <label for="maritalStatus">Marital Status</label>
+                <span class="helper-text">Current marital status of the employee</span>
+                <select name="maritalStatus" id="maritalStatus" required>
+                    <option value="" disabled selected>Pilih Status</option>
+                    <option value="Single">Single</option>
+                    <option value="Married">Married</option>
+                    <option value="Divorced">Divorced</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="monthlyIncome">Monthly Income</label>
+                <span class="helper-text">Total monthly income or salary</span>
+                <input type="number" name="monthlyIncome" id="monthlyIncome" required min="0" step="any">
+            </div>
+        </div>
+
+        <div class="form-row">
+            <div class="form-group">
+                <label for="department">Department</label>
+                <span class="helper-text">Department where the employee belongs</span>
+                <select name="department" id="department" required>
+                    <option value="" disabled selected>Pilih Department</option>
+                    <option value="Human Resources">Human Resources</option>
+                    <option value="Research & Development">Research & Development</option>
+                    <option value="Sales">Sales</option>
+                </select>
+            </div>
+
             <div class="form-group">
                 <label for="jobRole">Job Role</label>
                 <span class="helper-text">The specific role or job title of the employee</span>
@@ -77,15 +90,44 @@
                     <option value="Sales Representative">Sales Representative</option>
                 </select>
             </div>
+        </div>
+
+        <div class="form-row">
+            <div class="form-group">
+                <label for="yearsAtCompany">Years At Company</label>
+                <span class="helper-text">Total years worked at this company</span>
+                <input type="number" name="yearsAtCompany" id="yearsAtCompany" required min="0" max="50">
+            </div>
 
             <div class="form-group">
-                <label for="maritalStatus">Marital Status</label>
-                <span class="helper-text">Current marital status of the employee</span>
-                <select name="maritalStatus" id="maritalStatus" required>
-                    <option value="" disabled selected>Pilih Status</option>
-                    <option value="Single">Single</option>
-                    <option value="Married">Married</option>
-                    <option value="Divorced">Divorced</option>
+                <label for="yearsWithCurrManager">Years With Current Manager</label>
+                <span class="helper-text">Total years working under the current direct manager</span>
+                <input type="number" name="yearsWithCurrManager" id="yearsWithCurrManager" required min="0" max="50">
+            </div>
+        </div>
+
+        <div class="form-row">
+            <div class="form-group">
+                <label for="jobSatisfaction">Job Satisfaction</label>
+                <span class="helper-text">1-Low, 2-Medium, 3-High, 4-Very High</span>
+                <select name="jobSatisfaction" id="jobSatisfaction" required>
+                    <option value="" disabled selected>Pilih Tingkat Kepuasan</option>
+                    <option value="1">1 - Low</option>
+                    <option value="2">2 - Medium</option>
+                    <option value="3">3 - High</option>
+                    <option value="4">4 - Very High</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="environmentSatisfaction">Environment Satisfaction</label>
+                <span class="helper-text">1-Low, 2-Medium, 3-High, 4-Very High</span>
+                <select name="environmentSatisfaction" id="environmentSatisfaction" required>
+                    <option value="" disabled selected>Pilih Tingkat Kepuasan Lingkungan</option>
+                    <option value="1">1 - Low</option>
+                    <option value="2">2 - Medium</option>
+                    <option value="3">3 - High</option>
+                    <option value="4">4 - Very High</option>
                 </select>
             </div>
         </div>
@@ -102,49 +144,140 @@
             </div>
         </div>
 
-        <button type="submit" class="btn-predict">Prediksi Attrition</button>
-    </form>
-</div>
+            <button type="submit" class="btn-predict"><i class="fas fa-microchip"></i> EKSEKUSI PREDIKSI</button>
+        </form>
+    </div>
 
-{% if prediction %}
-<div class="result-container">
-    <h2>Hasil Prediksi</h2>
+    {% if prediction %}
     <div class="result-box">
         <div class="result-status {% if 'Yes' in prediction %}status-risk{% else %}status-safe{% endif %}">
-            <h3>Status: {{ prediction_label }}</h3>
-            <p><strong>Detail:</strong> {{ prediction }}</p>
-        </div>
-        
-        <div class="result-info">
-            <h4>Rekomendasi:</h4>
-            {% if 'Yes' in prediction %}
-            <ul>
-                <li>Tingkatkan perhatian terhadap kepuasan karyawan ini</li>
-                <li>Pertimbangkan program retensi atau promosi</li>
-                <li>Lakukan feedback dan diskusi karir secara berkala</li>
-                <li>Evaluasi lingkungan kerja dan beban kerja</li>
-            </ul>
-            {% else %}
-            <ul>
-                <li>Karyawan ini memiliki indikasi loyalitas tinggi</li>
-                <li>Pertahankan kondisi kerja yang positif saat ini</li>
-                <li>Terus berikan peluang pengembangan karir</li>
-                <li>Jaga hubungan baik dengan manajemen</li>
-            </ul>
+            <h3>Kalkulasi : {{ prediction_label }}</h3>
+            <p><strong>Keputusan Akhir:</strong> {{ prediction }} Attrition</p>
+            {% if probability %}
+            <div class="prob-badge">Probability: {{ probability }}</div>
             {% endif %}
+        </div>
+
+        <div class="result-info">
+            <h4><i class="fas fa-chart-bar"></i> Metrik Keandalan Algoritma:</h4>
+            <div class="metrics-grid">
+                <div class="metric-card">
+                    <div class="metric-title">Accuracy</div>
+                    <div class="metric-score">0.8707</div>
+                </div>
+                <div class="metric-card">
+                    <div class="metric-title">Precision</div>
+                    <div class="metric-score">0.7500</div>
+                </div>
+                <div class="metric-card">
+                    <div class="metric-title">F1 Score</div>
+                    <div class="metric-score">0.3214</div>
+                </div>
+            </div>
         </div>
     </div>
 </div>
 {% endif %}
 
+</div>
+
 <style>
-.prediction-container {
-    max-width: 800px;
-    margin: 30px auto;
+body {
+    background-color: #f0fdfa; /* Super light teal base */
+    margin: 0;
+    font-family: 'Inter', 'Segoe UI', sans-serif;
+}
+
+main {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px 0;
+}
+
+.predict-wrapper-card {
+    background-color: white;
+    margin: 10px auto;
+    border-radius: 20px;
+    border: 1px solid #ccfbf1;
+    box-shadow: 0 10px 25px -5px rgba(13, 148, 136, 0.1);
     padding: 30px;
-    background-color: #ffffff;
+}
+
+/* Header UI */
+.predict-header {
+    background: linear-gradient(135deg, #ccfbf1 0%, #99f6e4 100%);
+    border: 1px solid #5eead4;
     border-radius: 12px;
-    box-shadow: 0 4px 20px rgba(0,0,0,0.05);
+    padding: 25px 30px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 30px;
+    box-shadow: 0 4px 6px -1px rgba(20, 184, 166, 0.2);
+}
+
+.predict-header-content {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+.icon-brain {
+    background: #0d9488;
+    color: white;
+    width: 60px;
+    height: 60px;
+    border-radius: 14px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 28px;
+    box-shadow: 0 4px 10px rgba(13, 148, 136, 0.4);
+}
+
+.texts h1 {
+    color: #115e59;
+    margin: 0 0 5px 0;
+    font-size: 26px;
+    font-weight: 800;
+    border: none;
+    padding: 0;
+}
+
+.texts p {
+    color: #0f766e;
+    margin: 0;
+    font-size: 15px;
+    max-width: 800px;
+}
+
+.ai-tag {
+    background-color: rgba(255,255,255,0.8);
+    padding: 8px 16px;
+    border-radius: 20px;
+    color: #0f766e;
+    font-weight: 700;
+    font-size: 13px;
+    border: 1px solid #5eead4;
+}
+
+.ai-bolt {
+    color: #f59e0b; /* yellow */
+    margin-right: 5px;
+    animation: flash 2s infinite;
+}
+
+@keyframes flash {
+    0%, 50%, 100% { opacity: 1; }
+    25%, 75% { opacity: 0; }
+}
+
+/* Original Forms overridden to look premium */
+.prediction-container {
+    padding: 0 !important;
+    background-color: transparent !important;
+    box-shadow: none !important;
+    max-width: 100% !important;
 }
 
 .prediction-form {
@@ -173,19 +306,19 @@
 
 .helper-text {
     font-size: 13px;
-    color: #64748b;
+    color: #0d9488;
     margin-bottom: 10px;
 }
 
 .form-group input,
 .form-group select {
     padding: 12px 16px;
-    border: 1px solid #cbd5e1;
+    border: 1px solid #99f6e4 !important;
     border-radius: 8px;
     font-size: 15px;
     font-family: inherit;
     color: #334155;
-    background-color: #f8fafc;
+    background-color: #f8fafc !important;
     transition: all 0.3s ease;
 }
 
@@ -193,28 +326,27 @@
     appearance: none;
     -webkit-appearance: none;
     -moz-appearance: none;
-    background-image: url("data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22292.4%22%20height%3D%22292.4%22%3E%3Cpath%20fill%3D%22%232563eb%22%20d%3D%22M287%2069.4a17.6%2017.6%200%200%200-13-5.4H18.4c-5%200-9.3%201.8-12.9%205.4A17.6%2017.6%200%200%200%200%2082.2c0%205%201.8%209.3%205.4%2012.9l128%20127.9c3.6%203.6%207.8%205.4%2012.8%205.4s9.2-1.8%2012.8-5.4L287%2095c3.5-3.5%205.4-7.8%205.4-12.8%200-5-1.9-9.2-5.5-12.8z%22%2F%3E%3C%2Fsvg%3E");
+    background-image: url("data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22292.4%22%20height%3D%22292.4%22%3E%3Cpath%20fill%3D%22%230d9488%22%20d%3D%22M287%2069.4a17.6%2017.6%200%200%200-13-5.4H18.4c-5%200-9.3%201.8-12.9%205.4A17.6%2017.6%200%200%200%200%2082.2c0%205%201.8%209.3%205.4%2012.9l128%20127.9c3.6%203.6%207.8%205.4%2012.8%205.4s9.2-1.8%2012.8-5.4L287%2095c3.5-3.5%205.4-7.8%205.4-12.8%200-5-1.9-9.2-5.5-12.8z%22%2F%3E%3C%2Fsvg%3E");
     background-repeat: no-repeat;
     background-position: right 15px top 50%;
     background-size: 12px auto;
 }
 
 .form-group select option:checked {
-    background-color: #2563eb;
+    background-color: #0d9488;
     color: white;
 }
 
 .form-group input:focus,
 .form-group select:focus {
     outline: none;
-    border-color: #2563eb;
-    background-color: #ffffff;
-    box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.2);
+    border-color: #14b8a6 !important;
+    box-shadow: 0 0 0 3px rgba(20, 184, 166, 0.2) !important;
 }
 
 .btn-predict {
     padding: 14px;
-    background-color: #2563eb;
+    background: linear-gradient(135deg, #2dd4bf 0%, #0d9488 100%) !important;
     color: white;
     border: none;
     border-radius: 8px;
@@ -223,33 +355,128 @@
     cursor: pointer;
     transition: all 0.3s;
     margin-top: 15px;
-    box-shadow: 0 4px 6px -1px rgba(37, 99, 235, 0.2);
+    box-shadow: 0 4px 15px rgba(13, 148, 136, 0.3) !important;
+    letter-spacing: 0.5px;
 }
 
 .btn-predict:hover {
-    background-color: #1d4ed8;
-    transform: translateY(-2px);
-    box-shadow: 0 6px 10px -1px rgba(37, 99, 235, 0.3);
+    transform: translateY(-2px) !important;
+    box-shadow: 0 6px 20px rgba(13, 148, 136, 0.4) !important;
 }
 
-/* Result Box keeps its colors */
-.result-container { max-width: 800px; margin: 30px auto; }
-.result-box { padding: 20px; background-color: white; border-radius: 12px; box-shadow: 0 4px 20px rgba(0,0,0,0.05); }
-.result-status { padding: 20px; border-radius: 8px; margin-bottom: 20px; text-align: center; }
-.status-risk { background-color: #fef2f2; border-left: 4px solid #ef4444; color: #991b1b; }
-.status-safe { background-color: #f0fdf4; border-left: 4px solid #22c55e; color: #166534; }
-.result-status h3 { margin-bottom: 10px; font-size: 20px; }
-.result-status p { margin: 0; }
-.result-info { padding: 20px; background-color: #f8fafc; border-radius: 8px; }
-.result-info h4 { color: #333; margin-bottom: 10px; }
-.result-info ul { list-style-position: inside; line-height: 1.8; color: #475569; }
-.result-info li { margin-bottom: 8px; }
-.alert { padding: 15px; border-radius: 8px; margin-bottom: 20px; }
-.alert-error { background-color: #fef2f2; border-left: 4px solid #ef4444; color: #991b1b; }
+/* Result Box Overhaul */
+.result-box {
+    margin-top: 30px;
+    border: 1px solid #e2e8f0;
+    padding: 20px;
+    background-color: white;
+    border-radius: 12px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+}
+
+.result-status {
+    padding: 20px;
+    border-radius: 8px;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+.prob-badge {
+    display: inline-block;
+    background-color: rgba(255,255,255,0.9);
+    padding: 5px 15px;
+    border-radius: 6px;
+    font-weight: bold;
+    margin-top: 10px;
+    font-size: 15px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+}
+
+.status-risk {
+    background: linear-gradient(135deg, #fef2f2 0%, #fecaca 100%) !important;
+    border-left: 5px solid #ef4444 !important;
+    color: #991b1b !important;
+}
+
+.status-risk .prob-badge {
+    color: #b91c1c;
+}
+
+.status-safe {
+    background: linear-gradient(135deg, #f0fdf4 0%, #bbf7d0 100%) !important;
+    border-left: 5px solid #22c55e !important;
+    color: #166534 !important;
+}
+
+.status-safe .prob-badge {
+    color: #15803d;
+}
+
+.result-status h3 {
+    margin-bottom: 10px;
+    font-size: 20px;
+}
+
+.result-info {
+    padding: 20px;
+    background-color: #f8fafc !important;
+    border-radius: 8px;
+    border: 1px solid #e2e8f0;
+}
+
+.result-info h4 {
+    color: #115e59 !important;
+    font-size: 18px;
+    border-bottom: 2px solid #ccfbf1;
+    padding-bottom: 10px;
+    margin-bottom: 15px;
+}
+
+.metrics-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+    gap: 15px;
+}
+
+.metric-card {
+    background-color: white;
+    border: 1px solid #99f6e4;
+    border-radius: 8px;
+    padding: 15px;
+    text-align: center;
+    box-shadow: 0 2px 5px rgba(13, 148, 136, 0.05);
+}
+
+.metric-title {
+    font-size: 13px;
+    color: #0f766e;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-bottom: 8px;
+}
+
+.metric-score {
+    font-size: 22px;
+    font-weight: 800;
+    color: #0d9488;
+}
+
+.alert-error {
+    background-color: #fef2f2;
+    border-left: 4px solid #ef4444;
+    color: #991b1b;
+}
 
 @media (max-width: 768px) {
-    .form-row { grid-template-columns: 1fr; }
-    .prediction-container { padding: 20px; }
+    .predict-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 20px;
+    }
+    .form-row {
+        grid-template-columns: 1fr;
+    }
 }
 </style>
 {% endblock %}

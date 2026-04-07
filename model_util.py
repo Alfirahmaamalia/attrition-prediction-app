@@ -38,15 +38,9 @@ def get_model(use_local: bool = True):
 
 def get_feature_names():
     features = [
-        'Age',
-        'MonthlyIncome',
-        'YearsAtCompany',
-        'YearsInCurrentRole',
-        'YearsWithCurrManager',
-        'Department',
-        'JobRole',
-        'MaritalStatus',
-        'OverTime',
+        'Age', 'MonthlyIncome', 'YearsAtCompany', 'YearsWithCurrManager', 
+        'Department', 'JobRole', 'MaritalStatus', 'OverTime',
+        'Gender', 'JobSatisfaction', 'EnvironmentSatisfaction'
     ]
     return features
 
