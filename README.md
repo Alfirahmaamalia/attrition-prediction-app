@@ -295,15 +295,4 @@ python -m mlflow ui
 - [Railway Deployment](https://railway.app/docs)
 - [Google Looker Studio](https://support.google.com/looker-studio)
 
-## 📝 License
 
-This project is under [Your License Here]
-
-## 👥 Contributors
-
-- Your Name
-
----
-
-**Dibuat untuk**: Semester 6 DSP (Digital Signal Processing / Data Science Project)
-**Last Updated**: Maret 2026
